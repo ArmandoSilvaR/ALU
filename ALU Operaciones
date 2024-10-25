@@ -1,102 +1,147 @@
-int EstadoA = 0;
-int EstadoB = 0;
-
-int w = 0;
-int x = 0;
-int y = 0;
-int z = 0;
-
 void setup() {
-  pinMode(2, INPUT); 
+
+  pinMode(2, INPUT);
   pinMode(3, INPUT);
   pinMode(4, INPUT);
   pinMode(5, INPUT);
   pinMode(6, INPUT);
   pinMode(7, INPUT);
-  pinMode(13, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(8, INPUT);
   pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
 }
 
 void loop() {
 
-  EstadoA = digitalRead(2);
-  EstadoB = digitalRead(3);
-  w = digitalRead(4);
-  x = digitalRead(5);
-  y = digitalRead(6);
-  z = digitalRead(7);
+  bool A = digitalRead(2);
+  bool B = digitalRead(3);
+  bool C = digitalRead(4);
+  bool D = digitalRead(5);
+  bool X = digitalRead(6);
+  bool Y = digitalRead(7);
+  bool Z = digitalRead(8);
 
-  if ((EstadoA ^ EstadoB)&&(!z && !y && !x && w)) {
-    digitalWrite(13, HIGH);
+  if (!X && !Y && Z) {
+    if ((A && B && D) || (A && B && C) || (C && D)) {
+      digitalWrite (12, HIGH);
+    } else {
+      digitalWrite(12, LOW);
+    }
+    if ((A && B && !C && !D) || (A && B && C && D) || (!A && !C && D) || (!B && !C && D) || (!A && C && !D) || (!B && C && !D)) {
+
+      digitalWrite(11, HIGH);
+    } else {
+      digitalWrite (11, LOW);
+    }
+    if ((!A && B) || (A && !B)) {
+
+      digitalWrite(13, HIGH);
+
+    } else {
+      digitalWrite(13, LOW);
+    }
   }
 
-  if ((EstadoA && EstadoB)&&(!z && !y && !x && w)) {
-    digitalWrite(12, HIGH);
-  }
-
-  if ((EstadoA ^ EstadoB)&&(!z && !y && x && !w)) {
-    digitalWrite(13, HIGH);
-  }
-
-  if ((!EstadoA && EstadoB)&&(!z && !y && x && !w)) {
-    digitalWrite(11, HIGH);
-  }
-
-  if ((EstadoA && EstadoB)&&(!z && !y && x && w)) {
-    digitalWrite(13, HIGH);
-  }
-
-  if ((EstadoA && EstadoB)&&(!z && y && !x && !w)) {
-    digitalWrite(13, HIGH);
-  }
-
-  if ((!EstadoA && !EstadoB)&&(!z && y && !x && !w)) {
-    digitalWrite(10, HIGH);
-  }
-
-  if ((EstadoA && !EstadoB)&&(!z && y && !x && !w)) {
-    digitalWrite(9, HIGH);
-  }
-
-  if ((EstadoA && EstadoB) && (!z && y && !x && w)) {
-    digitalWrite(13, HIGH);
-  }
-
-  if ((EstadoA || EstadoB) && (!z && y && x && !w)) {
-    digitalWrite(13, HIGH);
-  }
-
-if ((!z && y && x && w)) {
-    if (!EstadoA) {
+  if (!X && Y && !Z) {
+    if ((!C && D) || (!A && B)) {
+      digitalWrite(12, HIGH);
+    } else {
+      digitalWrite(12, LOW);
+    }
+    if ((!C && D) || (C && !D)) {
+      digitalWrite(11, HIGH);
+    } else {
+      digitalWrite(11, LOW);
+    }
+    if ((!A && B) || (A && !B)) {
       digitalWrite(13, HIGH);
     } else {
       digitalWrite(13, LOW);
     }
   }
 
-  if ((EstadoA ^ EstadoB) && (z && !y && !x && !w)) {
-    digitalWrite(13, HIGH);
+  if (!X && Y && Z) {
+    if (D && C && B && A) {
+      digitalWrite(10, HIGH);
+    } else {
+      digitalWrite(10, LOW);
+    }
+
+    if ((!A && C && D) || (!B && C && D)) {
+      digitalWrite(11, HIGH);
+    } else {
+      digitalWrite(11, LOW);
+    }
+    if ((!A && B && C) || (B && C && !D) || (A && !B && D) || (A && !C && D)) {
+      digitalWrite(12, HIGH);
+    } else {
+      digitalWrite(12, LOW);
+    }
+    if (A && B) {
+      digitalWrite(13, HIGH);
+    } else {
+      digitalWrite(13, LOW);
+    }
   }
 
-  if (!(EstadoA ^ EstadoB) && (z && !y && !x && w)) {
-    digitalWrite(13, HIGH);
+  if (X && !Y && !Z) {
+    if (!A && !B && !C && !D) {
+      digitalWrite(9, HIGH);
+    } else {
+      digitalWrite(9, LOW);
+    }
+
+    if ((!B && C && !D) || (A && !B && !D)) {
+      digitalWrite(9, HIGH);
+    } else {
+      digitalWrite(9, LOW);
+    }
+    if (B && C && !D) {
+      digitalWrite(10, HIGH);
+    } else {
+      digitalWrite(10, LOW);
+    }
+    if ((!B && C && D) || (A && B && !D) || (A && B && C)) {
+      digitalWrite(11, HIGH);
+    } else {
+      digitalWrite(11, LOW);
+    }
+    if (!A && B && C && D) {
+      digitalWrite(12, HIGH); 
+    } else {
+      digitalWrite(12, LOW);
+    }
+    if ((A && !B && D) || (A && !C && D)) {
+      digitalWrite(13, HIGH);
+    } else {
+      digitalWrite(13, LOW);
+    }
+  }
+  if (X && !Y && Z) {
+    if (A && B && C && D) {
+      digitalWrite(13, HIGH);
+    } else {
+      digitalWrite(13, LOW);
+    }
   }
 
-  if (!(EstadoA && EstadoB) && (z && !y && x && !w)) {
-    digitalWrite(13, HIGH);
+  if (X && Y && !Z) {
+    if (A || B || C || D) {
+      digitalWrite(13, HIGH);
+    } else {
+      digitalWrite(13, LOW);
+    }
   }
 
-  if (!(EstadoA || EstadoB) && (z && !y && x && w)) {
-    digitalWrite(13, HIGH);
-  }
- 
-  digitalWrite(13, LOW);
-  digitalWrite(12, LOW);
-  digitalWrite(11, LOW);
-  digitalWrite(10, LOW);
-  digitalWrite(9, LOW);
-
+  if (X && Y && Z) {
+    if (A ^ B ^ C ^ D) {
+      digitalWrite(13, HIGH);
+    } else {
+      digitalWrite(13, LOW);
+    }
+  }
+ 
 }
